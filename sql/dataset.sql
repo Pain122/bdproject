@@ -37,7 +37,7 @@ CREATE TABLE incidents (
     "sup_distr_2012" float,
     latitude float,
     longitude float,
-    "point" VARCHAR ( 46 ),
+    datapoint point,
     neighbourhoods float,
     esncag float,
     cm_polygon float,
@@ -51,6 +51,6 @@ CREATE TABLE incidents (
 ALTER TABLE incidents
 ADD CONSTRAINT correct_weekdays CHECK (INC_WEEKDAY in ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',  'Sunday'));
 -- Inserting values to the table
-\COPY incidents FROM '/project/police.csv' DELIMITER ',' CSV HEADER;
+\COPY incidents FROM '../data/police.csv' DELIMITER ',' CSV HEADER;
 -- Just a check to see how many rows were imported. It should be 727658
 SELECT COUNT(*) FROM incidents;

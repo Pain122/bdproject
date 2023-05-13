@@ -42,7 +42,7 @@ CREATE EXTERNAL TABLE incidents_part_buck(
     sup_distr_2012 FLOAT,
     latitude FLOAT,
     longitude FLOAT,
-    datapoint VARCHAR ( 46 ),
+    datapoint POINT,
     neighbourhoods FLOAT,
     esncag FLOAT,
     cm_polygon FLOAT,
