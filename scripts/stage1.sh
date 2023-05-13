@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Creating Postgres database!"
-psql -U postgres -f ../sql/dataset.sql
+psql -U postgres -f ./sql/dataset.sql
 
 sqoop import-all-tables \
     -Dmapreduce.job.user.classpath.first=true \
@@ -13,7 +13,7 @@ sqoop import-all-tables \
     --m 1
 
 
-Then, move avsc files from the local folder:
+echo "Moving avsc files to hdfs"
 
 hdfs dfs -mkdir /project/avsc
 hdfs dfs -put /project/avsc/incidents.avsc /project/avsc/
