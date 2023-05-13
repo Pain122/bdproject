@@ -58,5 +58,5 @@ CREATE EXTERNAL TABLE incidents_part_buck(
     TBLPROPERTIES ('AVRO.COMPRESS'='SNAPPY');
 
 INSERT INTO incidents_part_buck partition (inc_year) 
-    SELECT * 
+    SELECT inc_datetime, inc_date, inc_time, inc_weekday, rep_datetime, row_id, inc_id, inc_number, cad_number, rep_type_code, rep_type_description, filled_online, inc_code, inc_category, inc_subcategory, inc_descr, resolution, intersection, cnn, police_district, analysis_neigh, sup_distr, sup_distr_2012, latitude, longitude, datapoint, neighbourhoods, esncag, cm_polygon, cchr, hsoc, iin, csd, cpd, inc_year
     FROM incidents;
