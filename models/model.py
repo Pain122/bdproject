@@ -99,8 +99,32 @@ target_assembler = VectorAssembler(inputCols=targets, outputCol='targets')
 transformed = feature_assembler.transform(data).select('features', 'longitude', 'latitude')
 
 (trainingData, testData) = transformed.randomSplit([0.7, 0.3], 42)
-# LINEAR REGRESSOR
+# LINEAR REGRESSOR - longitude
 lr = LinearRegression(featuresCol='features', labelCol='longitude')
+
+evaluator = RegressionEvaluator(labelCol="longitude", predictionCol="prediction", metricName="rmse")
+
+paramGrid = ParamGridBuilder().addGrid(lr.elasticNetParam, [0, 0.5]).addGrid(lr.regParam, [0, 0.01]).build()
+
+crossval = CrossValidator(estimator = lr, estimatorParamMaps=paramGrid, evaluator=evaluator, numFolds = 4, seed=42)
+
+cvModel = crossval.fit(trainingData)
+
+predictions = cvModel.transform(testData)
+
+predictions.coalesce(1)\
+    .select("prediction",'longitude')\
+    .write\
+    .mode("overwrite")\
+    .format("csv")\
+    .option("sep", ",")\
+    .option("header","true")\
+    .csv("/project/output/lr_lon_predictions.csv")
+
+rmse = evaluator.evaluate(predictions)
+print("Root Mean Squared Error (RMSE) on test data LR = %g" % rmse)
+# LINEAR REGRESSOR - latitude
+lr = LinearRegression(featuresCol='features', labelCol='latitude')
 
 evaluator = RegressionEvaluator(labelCol="latitude", predictionCol="prediction", metricName="rmse")
 
@@ -112,24 +136,24 @@ cvModel = crossval.fit(trainingData)
 
 predictions = cvModel.transform(testData)
 
-predictions.coalesce(1)
-    .select("prediction",'longitude')
-    .write
-    .mode("overwrite")
-    .format("csv")
-    .option("sep", ",")
-    .option("header","true")
-    .csv("/project/output/lr_predictions.csv")
+predictions.coalesce(1)\
+    .select("prediction",'latitude')\
+    .write\
+    .mode("overwrite")\
+    .format("csv")\
+    .option("sep", ",")\
+    .option("header","true")\
+    .csv("/project/output/lr_lat_predictions.csv")
 
 rmse = evaluator.evaluate(predictions)
 print("Root Mean Squared Error (RMSE) on test data LR = %g" % rmse)
 
-# GBTRegressor
-gbt = GBTRegressor(featuresCol="features", labelCol='latitude', maxIter=10, seed=42)
+# GBTRegressor - longitude
+gbt = GBTRegressor(featuresCol="features", labelCol='longitude', maxIter=10, seed=42)
 
 evaluator = RegressionEvaluator(labelCol="longitude", predictionCol="prediction", metricName="rmse")
 
-paramGrid = ParamGridBuilder().addGrid(gbt.maxDepth, [2, 5]).addGrid(lr.lossType, ['squared', 'absolute']).build()
+paramGrid = ParamGridBuilder().addGrid(gbt.maxDepth, [2, 5]).addGrid(gbt.lossType, ['squared', 'absolute']).build()
 
 crossval = CrossValidator(estimator = gbt, estimatorParamMaps=paramGrid, evaluator=evaluator, numFolds = 4, seed=42)
 
@@ -137,14 +161,38 @@ cvModel = crossval.fit(trainingData)
 
 predictions = cvModel.transform(testData)
 
-predictions.coalesce(1)
-    .select("prediction",'longitude')
-    .write
-    .mode("overwrite")
-    .format("csv")
-    .option("sep", ",")
-    .option("header","true")
-    .csv("/project/output/gbt_predictions.csv")
+predictions.coalesce(1)\
+    .select("prediction",'longitude')\
+    .write\
+    .mode("overwrite")\
+    .format("csv")\
+    .option("sep", ",")\
+    .option("header","true")\
+    .csv("/project/output/gbt_lon_predictions.csv")
+
+rmse = evaluator.evaluate(predictions)
+print("Root Mean Squared Error (RMSE) on test data GBT = %g" % rmse)
+# GBTRegressor - latitude
+gbt = GBTRegressor(featuresCol="features", labelCol='latitude', maxIter=10, seed=42)
+
+evaluator = RegressionEvaluator(labelCol="latitude", predictionCol="prediction", metricName="rmse")
+
+paramGrid = ParamGridBuilder().addGrid(gbt.maxDepth, [2, 5]).addGrid(gbt.lossType, ['squared', 'absolute']).build()
+
+crossval = CrossValidator(estimator = gbt, estimatorParamMaps=paramGrid, evaluator=evaluator, numFolds = 4, seed=42)
+
+cvModel = crossval.fit(trainingData)
+
+predictions = cvModel.transform(testData)
+
+predictions.coalesce(1)\
+    .select("prediction",'latitude')\
+    .write\
+    .mode("overwrite")\
+    .format("csv")\
+    .option("sep", ",")\
+    .option("header","true")\
+    .csv("/project/output/gbt_lat_predictions.csv")
 
 rmse = evaluator.evaluate(predictions)
 print("Root Mean Squared Error (RMSE) on test data GBT = %g" % rmse)
