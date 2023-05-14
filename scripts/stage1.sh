@@ -15,5 +15,6 @@ sqoop import-all-tables \
 
 echo "Moving avsc files to hdfs"
 
+hdfs dfs -mkdir /project
 hdfs dfs -mkdir /project/avsc
 hdfs dfs -put /project/avsc/incidents.avsc /project/avsc/
