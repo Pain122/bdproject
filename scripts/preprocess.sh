@@ -1,5 +1,6 @@
 #!/bin/bash
 echo "Cleaning the required directories"
+rm ./data/police.csv
 rm -rf /project
 rm -rf ~/output
 rm -rf ~/q1
@@ -12,3 +13,4 @@ hdfs dfs -rm -r /project
 echo "Unzipping the dataset!"
 unzip -j -d ./data ./data/police.zip
 echo "Installing requirements"
+pip install -r requirements.txt

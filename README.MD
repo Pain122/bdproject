@@ -14,4 +14,20 @@ This repository is a template for the final project of big data course in IU-202
 
 `main.sh` is the main script that will run all scripts of the pipeline stages which will execute the full pipeline and store the results in `output/` folder. During checking your project repo, the grader will run only the main script and check the results in `output/` folder.
 
+## RUNNING PROJECT
+
+To run the project, copy it to HDP machine under root directory (~/bdproject). Then, use command:
+
+```shell
+sh main.sh
+```
+
+## Running streamlit
+
+To run streamlit on your local PC, install it, unzip dataset to the same folder it is in, and then use:
+
+```shell
+streamlit run streamlit_app.py --server.port 60000
+```
+
 Created by Tishkin Pavel p.tishkin@innopolis.university

@@ -104,7 +104,7 @@ lr = LinearRegression(featuresCol='features', labelCol='longitude')
 
 evaluator = RegressionEvaluator(labelCol="longitude", predictionCol="prediction", metricName="rmse")
 
-paramGrid = ParamGridBuilder().addGrid(lr.elasticNetParam, [0, 0.5]).addGrid(lr.regParam, [0, 0.01]).build()
+paramGrid = ParamGridBuilder().addGrid(lr.elasticNetParam, [0, 0.25, 0.5]).addGrid(lr.regParam, [0, 0.01, 0.001]).build()
 
 crossval = CrossValidator(estimator = lr, estimatorParamMaps=paramGrid, evaluator=evaluator, numFolds = 4, seed=42)
 
@@ -128,7 +128,7 @@ lr = LinearRegression(featuresCol='features', labelCol='latitude')
 
 evaluator = RegressionEvaluator(labelCol="latitude", predictionCol="prediction", metricName="rmse")
 
-paramGrid = ParamGridBuilder().addGrid(lr.elasticNetParam, [0, 0.5]).addGrid(lr.regParam, [0, 0.01]).build()
+paramGrid = ParamGridBuilder().addGrid(lr.elasticNetParam, [0, 0.25, 0.5]).addGrid(lr.regParam, [0, 0.01, 0.001]).build()
 
 crossval = CrossValidator(estimator = lr, estimatorParamMaps=paramGrid, evaluator=evaluator, numFolds = 4, seed=42)
 

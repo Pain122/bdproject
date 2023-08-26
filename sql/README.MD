@@ -1,1 +1,1 @@
-
+This folder contains sql and hql files, which are used in stages 1-2 (SQL import + HQL import and Exploratory data analysis)
