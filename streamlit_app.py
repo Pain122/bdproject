@@ -37,7 +37,7 @@ st.markdown("""<style>body {
 st.markdown('---')
 st.header('Descriptive Data Analysis')
 st.subheader('Data Characteristics')
-incidents_dda = pd.DataFrame(data = [["Incidents", incidents.shape[0], incidents.shape[1]]],columns = ["Tables", "Features", "Instances"])
+incidents_dda = pd.DataFrame(data = [["Incidents", incidents.shape[1], incidents.shape[0]]],columns = ["Tables", "Features", "Instances"])
 st.write(incidents_dda)
 st.markdown('`incidents` table')
 st.write(incidents.describe())
