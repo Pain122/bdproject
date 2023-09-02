@@ -74,7 +74,7 @@ st.markdown('I built a total of 4 models. Two for longitude, and two for latitud
 st.subheader('ML Model')
 st.markdown('1. Linear Regression Models')
 st.markdown('Settings of the model')
-st.table(pd.DataFrame([['elasticNetParam', 0], ['elasticNetParam', 0.5], ['regParam', 0], ['regParam', 0.01]], columns = ['setting', 'value']))
+st.table(pd.DataFrame([['elasticNetParam', 0], ['elasticNetParam', 0.25], ['elasticNetParam', 0.5], ['regParam', 0], ['regParam', 0.01], ['regParam', 0.001]], columns = ['setting', 'value']))
 
 st.markdown('2. GBT Regressor')
 st.markdown('Settings of the model')
